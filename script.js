@@ -58,22 +58,6 @@ async function buscarUltimoCDI() {
     }
 }
 
-// consumo da API do BCB para buscar a taxa SELIC
-async function buscarUltimoCDI() {
-    const url = 'https://api.bcb.gov.br/dados/serie/bcdata.sgs.12/dados/ultimos/1?formato=json';
-    try {
-        const resposta = await fetch(url);
-        if (!resposta.ok) {
-            throw new Error('Falha ao obter dados do CDI');
-        }
-        const dados = await resposta.json();
-        return parseFloat(dados[0].valor);
-    } catch (erro) {
-        console.error('Erro ao buscar CDI:', erro);
-        // return 10.40; 
-    }
-}
-
 // calcular juros compostos com aplicação de IR
 function jurosCompostos(capitalInicial, taxa, tempo, aporteMensal, tributavel) {
     let montante = capitalInicial;
@@ -197,19 +181,3 @@ function formatarMoeda(valor) {
 }
 
 document.getElementById('calculateButton').addEventListener('click', calcularRetornos);
-
-
-
-document.getElementById('nextButton').addEventListener('click', plotNextInvestment);
-document.getElementById('prevButton').addEventListener('click', plotPreviousInvestment);
-
-
-function plotNextInvestment() {
-    currentInvestmentIndex = (currentInvestmentIndex + 1) % investmentsKeys.length;
-    plotChart(investmentsKeys[currentInvestmentIndex]);
-}
-
-function plotPreviousInvestment() {
-    currentInvestmentIndex = (currentInvestmentIndex - 1 + investmentsKeys.length) % investmentsKeys.length;
-    plotChart(investmentsKeys[currentInvestmentIndex]);
-}
