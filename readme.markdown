@@ -1,4 +1,4 @@
-# MoneyGrow
+# MoneyGrow-FI
 
 ![Logo](./imgs/logo.png)
 
@@ -23,6 +23,10 @@ O MoneyGrow é um sistema que tem como finalidade mostrar em quais tipos de inve
 ## API's Consumidas
 
 Neste projeto, foram consumidas APIs do Banco Central do Brasil a fim de abstrair índices dos rendimentos que e serão calculados.
+
+## Notas
+
+Este programa não tem como fim fornecer recomendação de aplicação financeira. Seu uso se dá exclusivamente para fins comparativos dentre os principais ativos de renda fixa no país.
 
 ## Equipe
 
