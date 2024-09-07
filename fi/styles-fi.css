@@ -22,13 +22,17 @@ h1 {
 }
 
 
+.border {
+    border: 0.1px solid #5f5f5f !important;
+}
 
-th, td {
+th,
+td {
     color: var(--cor-fonte);
 }
 
 .accordion-item {
-    background-color:var(--bkgrd-secoes);
+    background-color: var(--bkgrd-secoes);
     background: var(--bkgrd-secoes);
     box-shadow: var(--sombra-secoes);
     backdrop-filter: var(--blur);
@@ -36,7 +40,7 @@ th, td {
     border: var(--borda-secoes);
 }
 
-.accordion-button{
+.accordion-button {
     color: var(--cor-fonte) !important;
 }
 
