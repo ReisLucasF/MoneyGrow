@@ -13,13 +13,14 @@ function calcular() {
 
     let totalInvestido = 0;
     let totalReinvestido = 0;
+    let dividendosAcumulados = 0;
     let cotas = qtdCotasInicial;
     const accordionResultados = document.getElementById('accordionResultados');
     accordionResultados.innerHTML = '';
 
     // Exibir o container de resultados
     const resultadosContainer = document.getElementById('resultados-container');
-    resultadosContainer.style.display = 'block'; 
+    resultadosContainer.style.display = 'block';
 
     // Para cada ano
     for (let ano = 1; ano <= prazo; ano++) {
@@ -30,9 +31,9 @@ function calcular() {
         for (let mes = 1; mes <= 12; mes++) {
             // Cálculo dos dividendos do mês
             const dividendos = cotas * ultimoRendimento;
-            
-            // Reinvestimento dos dividendos, se aplicável
-            let reinvestimento = reinvestir ? dividendos : 0;
+
+            // Reinvestimento dos dividendos acumulados do mês anterior
+            let reinvestimento = reinvestir ? dividendosAcumulados : 0;
             const cotasReinvestidas = Math.floor(reinvestimento / precoCota); // Arredondando para o inteiro mais baixo
 
             // Aporte mensal
@@ -49,14 +50,17 @@ function calcular() {
             totalAnoReinvestido += reinvestimento;
             dividendosAno += dividendos;
 
+            dividendosAcumulados = dividendos;
+
             // Linha da tabela para o mês
             tabela += `
                 <tr>
                     <td>${mes}°</td>
                     <td>${cotas}</td> <!-- Exibe o valor inteiro de cotas -->
-                    <td>R$ ${investimentoMensal.toFixed(2)}</td>
-                    <td>R$ ${reinvestimento.toFixed(2)}</td>
-                    <td>R$ ${dividendos.toFixed(2)}</td>
+                    <td>${formatarMoeda((cotas * precoCota) + investimentoMensal + reinvestimento)}</td>
+                    <td>${formatarMoeda(investimentoMensal)}</td>
+                    <td>${formatarMoeda(reinvestimento)}</td>
+                    <td>${formatarMoeda(dividendos)}</td>
                 </tr>
             `;
         }
@@ -76,6 +80,7 @@ function calcular() {
                                 <tr>
                                     <th>Mês</th>
                                     <th>Cotas</th>
+                                    <th>Patrimônio</th>
                                     <th>Valor Investido</th>
                                     <th>Reinvestimento</th>
                                     <th>Dividendo</th>
@@ -92,8 +97,13 @@ function calcular() {
     }
 
     // Atualizar os resultados finais
-    document.getElementById('ultimo-rendimento-resumo').innerText = ultimoRendimento.toFixed(2);
-    document.getElementById('total-investido').innerText = totalInvestido.toFixed(2);
-    document.getElementById('total-reinvestido').innerText = totalReinvestido.toFixed(2);
-    document.getElementById('dividendos-finais').innerText = (cotas * ultimoRendimento).toFixed(2);
+    document.getElementById('ultimo-rendimento-resumo').innerText = formatarMoeda(ultimoRendimento);
+    document.getElementById('total-investido').innerText = formatarMoeda(totalInvestido);
+    document.getElementById('total-reinvestido').innerText = formatarMoeda(totalReinvestido);
+    document.getElementById('dividendos-finais').innerText = formatarMoeda(cotas * ultimoRendimento);
+}
+
+
+function formatarMoeda(valor) {
+    return valor.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' });
 }
