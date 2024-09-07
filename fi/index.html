@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Fundos Imobiliários</title>
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="../styles.css" />
+    <link rel="stylesheet" href="styles-fi.css" />
+    <link
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css"
+      rel="stylesheet"
+    />
+    <link rel="shortcut icon" href="../imgs/logo.png" type="image/x-icon" />
+  </head>
+  <body class="bg-dark text-light d-flex flex-column min-vh-100">
+    <nav class="navbar navbar-expand-lg">
+      <div class="container barraNavegacao">
+        <a class="navbar-brand" href="#">
+          <img class="logo" src="../imgs/logo.png" alt="Logo" /> MoneyGrow
+        </a>
+        <div class="collapse navbar-collapse">
+          <ul class="navbar-nav ms-auto">
+            <li class="nav-item">
+              <a class="nav-link" href="../index.html"> Ir para Renda Fixa </a>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </nav>
+
+    <div class="container-fluid mt-5">
+      <div class="row">
+        <!-- Formulário de entrada -->
+        <div class="col-md-6">
+          <form id="simulador" class="border p-4 rounded secao">
+            <div class="mb-3">
+              <label for="preco-cota" class="form-label">Preço da cota</label>
+              <input
+                type="number"
+                class="form-control"
+                id="preco-cota"
+                step="0.01"
+                value="10.03"
+              />
+            </div>
+
+            <div class="mb-3">
+              <label for="ultimo-rendimento" class="form-label"
+                >Último rendimento</label
+              >
+              <input
+                type="number"
+                class="form-control"
+                id="ultimo-rendimento"
+                step="0.01"
+                value="0.09"
+              />
+            </div>
+
+            <div class="mb-3">
+              <label for="investimento-mensal" class="form-label"
+                >Investimento mensal</label
+              >
+              <input
+                type="number"
+                class="form-control"
+                id="investimento-mensal"
+                value="200"
+              />
+            </div>
+
+            <div class="mb-3">
+              <label for="prazo" class="form-label">Prazo (em anos)</label>
+              <input type="number" class="form-control" id="prazo" value="2" />
+            </div>
+
+            <div class="mb-3">
+              <label for="qtd-cotas-inicial" class="form-label"
+                >Quantidade de cotas inicial</label
+              >
+              <input
+                type="number"
+                class="form-control"
+                id="qtd-cotas-inicial"
+                value="600"
+              />
+            </div>
+
+            <div class="form-check mb-3">
+              <input
+                class="form-check-input"
+                type="checkbox"
+                id="reinvestir-dividendos"
+                checked
+              />
+              <label class="form-check-label" for="reinvestir-dividendos">
+                Reinvestir dividendos ganhos e o que sobrar do investimento
+                mensal
+              </label>
+            </div>
+
+            <button
+              type="button"
+              class="btn btn-primary w-100"
+              onclick="calcular()"
+            >
+              Calcular
+            </button>
+          </form>
+        </div>
+
+        <!-- Resultados -->
+        <div class="col-md-6" id="resultados-container">
+          <div id="resultados" class="border p-4 rounded secao">
+            <h2>Resultados</h2>
+            <div id="resumo" class="mb-3">
+              <p>
+                <strong>Último rendimento:</strong> R$
+                <span id="ultimo-rendimento-resumo">0.09</span>
+              </p>
+              <p>
+                <strong>Total Investido:</strong> R$
+                <span id="total-investido">0.00</span>
+              </p>
+              <p>
+                <strong>Total Reinvestido:</strong> R$
+                <span id="total-reinvestido">0.00</span>
+              </p>
+              <p>
+                <strong>Dividendos mensais no final:</strong> R$
+                <span id="dividendos-finais">0.00</span>
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="row mt-5">
+        <!-- toggle -->
+        <div
+          class="accordion custom-accordion-bg"
+          id="accordionResultados"
+        ></div>
+      </div>
+    </div>
+
+    <footer class="text-center py-3 mt-auto">
+      <p class="mb-0">MoneyGrow-FI - Simulador de Investimentos &copy; 2024</p>
+    </footer>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="script-fi.js"></script>
+  </body>
+</html>

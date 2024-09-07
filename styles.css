@@ -2,12 +2,12 @@
     --cor-porimaria: #a73bff;
     --cor-porimaria-hover: #7721be;
     --cor-de-fundo: #212529;
-    --cor-gradiente: #343a40;
+    --cor-gradiente: #282d31;
     --cor-fonte: #f8f9fa;
     --cor-botao: #28a745;
     --border-radius: 10px;
     --cor-containers: #f9f9f9;
-    --bkgrd-secoes: rgba(255, 255, 255, 0.25);
+    --bkgrd-secoes: rgba(139, 139, 139, 0.25);
     --sombra-secoes: 0 8px 32px 0 rgba(31, 38, 135, 0.37);
     --blur: blur(4px);
     --borda-secoes: 1px solid rgba(255, 255, 255, 0.18);
