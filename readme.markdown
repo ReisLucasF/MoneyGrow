@@ -22,7 +22,7 @@ O MoneyGrow é um sistema que tem como finalidade mostrar em quais tipos de inve
 
 ## API's Consumidas
 
-Neste projeto, foram consumidas APIs do Banco Central do Brasil a fim de abstrair índices dos rendimentos que e serão calculados.
+Neste projeto, foram consumidas APIs do Banco Central do Brasil a fim de abstrair índices dos rendimentos que serão calculados.
 
 ## Notas
 
