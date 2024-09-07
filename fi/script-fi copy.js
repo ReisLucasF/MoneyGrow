@@ -10,7 +10,7 @@ function calcular() {
     let totalInvestido = 0;
     let totalReinvestido = 0;
     let cotas = qtdCotasInicial;
-    let dividendosAnteriores = 0; // Usado para armazenar os dividendos do mês anterior a partir do 2º mês
+    let dividendosAnteriores = 0;
     const accordionResultados = document.getElementById('accordionResultados');
     accordionResultados.innerHTML = '';
 
@@ -25,19 +25,8 @@ function calcular() {
 
         // Para cada mês
         for (let mes = 1; mes <= 12; mes++) {
-            let reinvestimento;
-
-            // Cálculo dos dividendos do mês atual
-            const dividendos = cotas * ultimoRendimento;
-
-            // Se for o primeiro mês, o reinvestimento será feito com os proventos do próprio mês
-            if (mes === 1 && ano === 1) {
-                reinvestimento = reinvestir ? dividendos : 0;
-            } else {
-                // Nos demais meses, o reinvestimento será feito com base nos dividendos do mês anterior
-                reinvestimento = reinvestir ? dividendosAnteriores : 0;
-            }
-
+            // O reinvestimento deve ser o dividendo do mês anterior
+            let reinvestimento = reinvestir ? dividendosAnteriores : 0;
             const cotasReinvestidas = Math.floor(reinvestimento / precoCota); // Arredondando para o inteiro mais baixo
 
             // Aporte mensal
@@ -45,6 +34,9 @@ function calcular() {
 
             // Atualizar a quantidade de cotas
             cotas += cotasReinvestidas + cotasAporte;
+
+            // Cálculo dos dividendos do mês atual
+            const dividendos = cotas * ultimoRendimento;
 
             // Atualizar os totais
             totalReinvestido += reinvestimento;
@@ -54,7 +46,7 @@ function calcular() {
             totalAnoReinvestido += reinvestimento;
             dividendosAno += dividendos;
 
-            // Cálculo do patrimônio (cotas * valor da cota)
+            // Cálculo do patrimônio (cotas * valor da cota + investimento mensal + reinvestimento)
             const patrimonio = cotas * precoCota;
 
             // Linha da tabela para o mês
