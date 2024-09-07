@@ -13,6 +13,8 @@
     --borda-secoes: 1px solid rgba(255, 255, 255, 0.18);
 }
 
+
+
 ::placeholder {
     color: #2024272a !important;
 }
@@ -170,4 +172,10 @@ footer {
     backdrop-filter: var(--blur);
     -webkit-backdrop-filter: var(--blur);
     border: var(--borda-secoes);
+}
+
+
+a:hover {
+    text-decoration: none;
+    color: var(--cor-porimaria) !important;
 }
