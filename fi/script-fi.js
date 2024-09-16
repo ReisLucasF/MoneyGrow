@@ -9,6 +9,7 @@ function calcular() {
 
     let totalInvestido = 0;
     let totalReinvestido = 0;
+    let totalProventosRecebidos = 0; // Nova variável para acumular os proventos recebidos
     let cotas = qtdCotasInicial;
     let dividendosAnteriores = 0; // Usado para armazenar os dividendos do mês anterior a partir do 2º mês
     const accordionResultados = document.getElementById('accordionResultados');
@@ -29,6 +30,9 @@ function calcular() {
 
             // Cálculo dos dividendos do mês atual
             const dividendos = cotas * ultimoRendimento;
+
+            // Acumular dividendos no total de proventos recebidos
+            totalProventosRecebidos += dividendos;
 
             // Se for o primeiro mês, o reinvestimento será feito com os proventos do próprio mês
             if (mes === 1 && ano === 1) {
@@ -105,10 +109,11 @@ function calcular() {
     }
 
     // Atualizar os resultados finais
-    document.getElementById('ultimo-rendimento-resumo').innerText = ultimoRendimento.toFixed(2);
-    document.getElementById('total-investido').innerText = totalInvestido.toFixed(2);
-    document.getElementById('total-reinvestido').innerText = totalReinvestido.toFixed(2);
-    document.getElementById('dividendos-finais').innerText = (cotas * ultimoRendimento).toFixed(2);
+    document.getElementById('ultimo-rendimento-resumo').innerText = formatarMoeda(ultimoRendimento);
+    document.getElementById('total-investido').innerText = formatarMoeda(totalInvestido);
+    document.getElementById('total-reinvestido').innerText = formatarMoeda(totalReinvestido);
+    document.getElementById('dividendos-finais').innerText = formatarMoeda(cotas * ultimoRendimento);
+    document.getElementById('total-proventos-recebidos').innerText = formatarMoeda(totalProventosRecebidos);
 }
 
 function formatarMoeda(valor) {

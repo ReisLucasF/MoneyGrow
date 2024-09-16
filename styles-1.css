@@ -1,0 +1,13 @@
+#container,
+#melhoresOPC {
+    display: none;
+
+}
+
+.secao {
+    background: var(--bkgrd-secoes);
+    box-shadow: var(--sombra-secoes);
+    backdrop-filter: var(--blur);
+    -webkit-backdrop-filter: var(--blur);
+    border: var(--borda-secoes);
+}

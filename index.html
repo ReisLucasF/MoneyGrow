@@ -9,6 +9,7 @@
       rel="stylesheet"
     />
     <link rel="stylesheet" href="styles.css" />
+    <link rel="stylesheet" href="styles-1.css" />
     <link
       href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css"
       rel="stylesheet"
@@ -20,20 +21,27 @@
     <nav class="navbar navbar-expand-lg">
       <div class="container barraNavegacao">
         <a class="navbar-brand" href="#">
-          <img class="logo" src="./imgs/logo.png" alt="Logo" /> MoneyGrow
+          <img class="logo" src="../imgs/logo.png" alt="Logo" /> MoneyGrow
         </a>
-        <div class="collapse navbar-collapse">
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+          <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNav">
           <ul class="navbar-nav ms-auto">
-            <li class="nav-item">
-              <a class="nav-link" href="./fi/index.html">
-                Ir para Fundos Imobiliários
+            <li class="nav-item dropdown">
+              <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                Opções
               </a>
+              <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+                <li><a class="dropdown-item" href="./fi">Fundos Imobiliários</a></li>
+                <li><a class="dropdown-item" href="./precoteto">Preço Teto</a></li>
+              </ul>
             </li>
           </ul>
         </div>
       </div>
     </nav>
-
+    
     <div class="container-fluid flex-grow-1 mt-4">
       <div class="row">
         <div class="col-lg-4 mb-4">

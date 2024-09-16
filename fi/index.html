@@ -22,10 +22,19 @@
         <a class="navbar-brand" href="#">
           <img class="logo" src="../imgs/logo.png" alt="Logo" /> MoneyGrow
         </a>
-        <div class="collapse navbar-collapse">
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+          <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNav">
           <ul class="navbar-nav ms-auto">
-            <li class="nav-item">
-              <a class="nav-link" href="../index.html"> Ir para Renda Fixa </a>
+            <li class="nav-item dropdown">
+              <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                Opções
+              </a>
+              <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+                <li><a class="dropdown-item" href="../index.html">Renda Fixa</a></li>
+                <li><a class="dropdown-item" href="../precoteto/">Preço Teto</a></li>
+              </ul>
             </li>
           </ul>
         </div>
@@ -129,6 +138,10 @@
               <p>
                 <strong>Total Reinvestido:</strong>
                 <span id="total-reinvestido">0.00</span>
+              </p>
+              <p></p>
+                <strong>Total de Proventos Recebidos:</strong>
+                <span id="total-proventos-recebidos">0.00</span>
               </p>
               <p>
                 <strong>Dividendos mensais no final:</strong>

@@ -14,15 +14,10 @@
 }
 
 
-
 ::placeholder {
     color: #2024272a !important;
 }
 
-#container,
-#melhoresOPC {
-    display: none;
-}
 
 body {
     height: 100vh;
@@ -90,16 +85,6 @@ body {
     padding: 10px;
     margin-bottom: 10px;
     border-radius: var(--border-radius);
-}
-
-#container,
-#melhoresOPC {
-    display: none;
-
-}
-
-body {
-    font-family: 'Arial', sans-serif;
 }
 
 #resultsTable {

@@ -155,7 +155,7 @@ function exibirResultados(resultados) {
     const tabela = document.createElement('table');
     tabela.setAttribute('id', 'resultsTable');
     const linhaCabecalho = tabela.insertRow();
-    const cabecalhos = ["Investimento", "Retorno Líquido", "Retorno Mensal Médio"];
+    const cabecalhos = ["Investimento", "Patrimônio final", "Retorno Líquido", "Retorno Mensal Médio"];
     cabecalhos.forEach(textoCabecalho => {
         let cabecalho = document.createElement('th');
         cabecalho.textContent = textoCabecalho;
@@ -166,6 +166,8 @@ function exibirResultados(resultados) {
         const linha = tabela.insertRow();
         const celulaNome = linha.insertCell();
         celulaNome.textContent = chave;
+        const celulaRetornoBruto = linha.insertCell();
+        celulaRetornoBruto.textContent = formatarMoeda(valor.retornoLiquido);
         const celulaRetornoLiquido = linha.insertCell();
         celulaRetornoLiquido.textContent = formatarMoeda(valor.retornoSemInicial);
         const celulaRetornoMensal = linha.insertCell();
