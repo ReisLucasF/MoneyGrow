@@ -1,10 +1,28 @@
 // Função para adicionar mais inputs de dividendos
 document.getElementById('add-dividendo').addEventListener('click', function () {
     const container = document.getElementById('dividendos-container');
+
     const newDividendoInput = document.createElement('div');
-    newDividendoInput.classList.add('mb-3');
-    newDividendoInput.innerHTML = '<input type="number" class="form-control dividendos" placeholder="Digite o dividendo anual">';
+    newDividendoInput.classList.add('mb-3', 'd-flex');
+
+    newDividendoInput.innerHTML = `
+        <input type="number" class="form-control dividendos" placeholder="Digite o dividendo anual">
+        <button class="btn btn-danger ms-2 remove-dividendo">Excluir</button>
+    `;
+
     container.appendChild(newDividendoInput);
+
+    // Adiciona o evento de click ao botão excluir
+    newDividendoInput.querySelector('.remove-dividendo').addEventListener('click', function () {
+        newDividendoInput.remove();
+    });
+});
+
+// Adicionar funcionalidade de remover o primeiro dividendo se necessário
+document.querySelectorAll('.remove-dividendo').forEach(button => {
+    button.addEventListener('click', function () {
+        button.parentElement.remove();
+    });
 });
 
 // Função para calcular o yeld médio e preço teto
