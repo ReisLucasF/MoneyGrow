@@ -33,8 +33,8 @@ function exibirResultado(ticker, dados) {
 
     const html = `
         <h2>${ticker}</h2>
-        <p><strong class="${classeCotacao}">R$ ${dados.cotacao_atual.toFixed(2)}</strong><br><span>Cotação Atual:</span></p>
-        <p><strong>R$ ${dados.preco_teto.toFixed(2)}</strong><br><span>Preço Teto:</span></p>
+        <p><strong class="${classeCotacao}">R$ ${dados.cotacao_atual.toFixed(2)}</strong><br><span>Cotação Atual</span></p>
+        <p><strong>R$ ${dados.preco_teto.toFixed(2)}</strong><br><span>Preço Teto</span></p>
     `;
 
 
