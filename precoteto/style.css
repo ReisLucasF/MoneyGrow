@@ -1,0 +1,37 @@
+.modal-content {
+    background-color: #333;
+    color: white;
+}
+
+.modal-title,
+.modal-body p {
+    color: rgb(24, 24, 24);
+}
+
+.modal-backdrop {
+    z-index: 1040;
+}
+
+.modal {
+    z-index: 1050;
+}
+
+.secao2 {
+    background: var(--bkgrd-secoes);
+    box-shadow: var(--sombra-secoes);
+    backdrop-filter: var(--blur);
+    -webkit-backdrop-filter: var(--blur);
+    border: var(--borda-secoes);
+}
+
+.red {
+    color: red;
+}
+
+.green {
+    color: green;
+}
+
+::placeholder {
+    color: #4b4b4b!important;
+}

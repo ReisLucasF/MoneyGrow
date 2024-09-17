@@ -1,77 +1,44 @@
-// Função para adicionar mais inputs de dividendos
-document.getElementById('add-dividendo').addEventListener('click', function () {
-    const container = document.getElementById('dividendos-container');
+document.getElementById('buscar-btn').addEventListener('click', function() {
+    const ticker = document.getElementById('ticker-input').value;
+    if (ticker) {
+        buscarDadosAtivo(ticker);
+    } else {
+        alert('Por favor, insira um ticker.');
+    }
+});
 
-    const newDividendoInput = document.createElement('div');
-    newDividendoInput.classList.add('mb-3', 'd-flex');
+async function buscarDadosAtivo(ticker) {
+    try {
+        const response = await fetch(`https://pecoteto.vercel.app/preco_teto/${ticker}`);
+        if (!response.ok) {
+            throw new Error('Erro ao buscar os dados. Verifique o ticker ou tente novamente mais tarde.');
+        }
 
-    newDividendoInput.innerHTML = `
-        <input type="number" class="form-control dividendos" placeholder="Digite o dividendo anual">
-        <button class="btn btn-danger ms-2 remove-dividendo">Excluir</button>
+        const dados = await response.json();
+        exibirResultado(ticker.toUpperCase(), dados);
+    } catch (error) {
+        document.getElementById('resultado').innerHTML = `<h3>${error.message}</h3>`;
+        document.getElementById('resultado').style.display = 'block';
+    }
+}
+
+function exibirResultado(ticker, dados) {
+    let dividendos = '';
+    for (let ano in dados.dividendos_ultimos_5_anos) {
+        dividendos += `<p><strong>${ano}</strong>: R$ ${dados.dividendos_ultimos_5_anos[ano].toFixed(2)}</p>`;
+    }
+
+    // Verifica se a cotação atual é maior que o preço teto
+    const classeCotacao = dados.cotacao_atual > dados.preco_teto ? 'red' : 'green';
+
+    const html = `
+        <h2>${ticker}</h2>
+        <p><strong class="${classeCotacao}">R$ ${dados.cotacao_atual.toFixed(2)}</strong><br><span>Cotação Atual:</span></p>
+        <p><strong>R$ ${dados.preco_teto.toFixed(2)}</strong><br><span>Preço Teto:</span></p>
     `;
 
-    container.appendChild(newDividendoInput);
 
-    // Adiciona o evento de click ao botão excluir
-    newDividendoInput.querySelector('.remove-dividendo').addEventListener('click', function () {
-        newDividendoInput.remove();
-    });
-});
-
-// Adicionar funcionalidade de remover o primeiro dividendo se necessário
-document.querySelectorAll('.remove-dividendo').forEach(button => {
-    button.addEventListener('click', function () {
-        button.parentElement.remove();
-    });
-});
-
-// Função para calcular o yeld médio e preço teto
-function calcular() {
-    // Obter a cotação
-    const cotacao = parseFloat(document.getElementById('cotacao').value);
-
-    if (isNaN(cotacao) || cotacao <= 0) {
-        alert("Por favor, insira um valor válido para a cotação.");
-        return;
-    }
-
-    // Obter todos os dividendos
-    const dividendos = Array.from(document.getElementsByClassName('dividendos')).map(input => parseFloat(input.value));
-
-    // Verificar se os dividendos são válidos
-    if (dividendos.some(isNaN)) {
-        alert("Por favor, insira valores válidos para todos os dividendos.");
-        return;
-    }
-
-    // Calcular a soma dos dividendos
-    const somaDividendos = dividendos.reduce((total, dividendo) => total + dividendo, 0);
-
-    // Verificar se há dividendos válidos
-    if (dividendos.length === 0 || somaDividendos === 0) {
-        alert("Por favor, insira pelo menos um dividendo válido.");
-        return;
-    }
-
-    // Calcular o yeld médio
-    const yeldMedio = ((somaDividendos / dividendos.length) / cotacao) * 100;
-
-    // Obter o percentual desejado
-    const percentual = parseFloat(document.getElementById('percentual').value) / 100;
-
-    if (isNaN(percentual) || percentual <= 0) {
-        alert("Por favor, insira um percentual válido.");
-        return;
-    }
-
-    // Calcular o preço teto
-    const precoTeto = ((somaDividendos / dividendos.length) / percentual);
-
-    // Exibir os resultados na modal
-    document.getElementById('yeld-medio').innerText = yeldMedio.toFixed(2);
-    document.getElementById('preco-teto').innerText = precoTeto.toFixed(2);
-
-    // Abrir a modal de resultados
-    const resultModal = new bootstrap.Modal(document.getElementById('resultModal'));
-    resultModal.show();
+    document.getElementById('resultado').innerHTML = html;
+    document.getElementById('resultado').style.display = 'block';
 }
+
