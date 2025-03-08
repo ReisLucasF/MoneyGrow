@@ -3,135 +3,612 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Renda Fixa</title>
+    <title>MoneyGrow - Simulador de Investimentos</title>
     <link
-      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css"
+      href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css"
       rel="stylesheet"
     />
-    <link rel="stylesheet" href="styles.css" />
-    <link rel="stylesheet" href="styles-1.css" />
     <link
       href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css"
       rel="stylesheet"
     />
-    <link rel="shortcut icon" href="./imgs/logo.png" type="image/x-icon" />
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+      tailwind.config = {
+        theme: {
+          extend: {
+            colors: {
+              primary: {
+                DEFAULT: "#6366F1",
+                hover: "#4F46E5",
+                light: "#EEF2FF",
+              },
+              dark: {
+                DEFAULT: "#1E293B",
+                light: "#334155",
+                lighter: "#475569",
+              },
+            },
+          },
+        },
+      };
+    </script>
+    <style>
+      .glassmorphism {
+        backdrop-filter: blur(10px);
+        background-color: rgba(255, 255, 255, 0.1);
+        border: 1px solid rgba(255, 255, 255, 0.05);
+      }
+      .chart-container {
+        min-height: 350px;
+      }
+      .highcharts-credits {
+        display: none;
+      }
+    </style>
   </head>
 
-  <body class="bg-dark text-light d-flex flex-column min-vh-100">
-    <nav class="navbar navbar-expand-lg">
-      <div class="container barraNavegacao">
-        <a class="navbar-brand" href="#">
-          <img class="logo" src="./imgs/logo.png" alt="Logo" /> MoneyGrow
-        </a>
-        <button
-          class="navbar-toggler"
-          type="button"
-          data-bs-toggle="collapse"
-          data-bs-target="#navbarNav"
-          aria-controls="navbarNav"
-          aria-expanded="false"
-          aria-label="Toggle navigation"
-        >
-          <span class="navbar-toggler-icon"></span>
-        </button>
-        <div class="collapse navbar-collapse" id="navbarNav">
-          <ul class="navbar-nav ms-auto">
-            <li class="nav-item dropdown">
-              <a
-                class="nav-link dropdown-toggle"
-                href="#"
-                id="navbarDropdown"
-                role="button"
-                data-bs-toggle="dropdown"
-                aria-expanded="false"
+  <body
+    class="bg-gradient-to-br from-gray-900 to-gray-800 text-gray-100 min-h-screen flex flex-col"
+  >
+    <!-- Navigation -->
+    <nav class="bg-dark-light bg-opacity-50 shadow-lg">
+      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="flex justify-between h-16">
+          <div class="flex items-center">
+            <a href="#" class="flex items-center space-x-2">
+              <img
+                class="h-10 w-auto"
+                src="./imgs/logo.png"
+                alt="MoneyGrow Logo"
+              />
+              <span class="text-xl font-bold text-white">MoneyGrow</span>
+            </a>
+          </div>
+          <div class="hidden md:flex md:items-center">
+            <div class="relative group">
+              <button
+                type="button"
+                class="inline-flex items-center px-4 py-2 text-sm font-medium text-white rounded-md hover:bg-dark-lighter focus:outline-none"
               >
-                Opções
-              </a>
-              <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
-                <li>
-                  <a class="dropdown-item" href="./fi">Fundos Imobiliários</a>
-                </li>
-                <li>
-                  <a class="dropdown-item" href="./precoteto">Preço Teto</a>
-                </li>
-              </ul>
-            </li>
-          </ul>
+                <span>Opções</span>
+                <svg
+                  class="ml-2 h-5 w-5"
+                  xmlns="http://www.w3.org/2000/svg"
+                  viewBox="0 0 20 20"
+                  fill="currentColor"
+                  aria-hidden="true"
+                >
+                  <path
+                    fill-rule="evenodd"
+                    d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z"
+                    clip-rule="evenodd"
+                  />
+                </svg>
+              </button>
+              <div
+                class="absolute right-0 w-48 py-2 mt-2 bg-white rounded-md shadow-xl opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-300 z-50"
+              >
+                <a
+                  href="./fi"
+                  class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
+                  >Fundos Imobiliários</a
+                >
+                <!-- <a
+                  href="./precoteto"
+                  class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
+                  >Preço Teto</a
+                > -->
+              </div>
+            </div>
+          </div>
+          <div class="flex items-center md:hidden">
+            <button
+              type="button"
+              id="mobileMenuButton"
+              class="inline-flex items-center justify-center p-2 rounded-md text-gray-400 hover:text-white hover:bg-gray-700 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-white"
+            >
+              <svg
+                class="h-6 w-6"
+                xmlns="http://www.w3.org/2000/svg"
+                fill="none"
+                viewBox="0 0 24 24"
+                stroke="currentColor"
+              >
+                <path
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  stroke-width="2"
+                  d="M4 6h16M4 12h16M4 18h16"
+                />
+              </svg>
+            </button>
+          </div>
         </div>
+      </div>
+      <div
+        id="mobileMenu"
+        class="hidden md:hidden px-2 pt-2 pb-3 space-y-1 sm:px-3"
+      >
+        <a
+          href="./fi"
+          class="block px-3 py-2 rounded-md text-base font-medium text-white hover:bg-gray-700"
+          >Fundos Imobiliários</a
+        >
+        <!-- <a
+          href="./precoteto"
+          class="block px-3 py-2 rounded-md text-base font-medium text-white hover:bg-gray-700"
+          >Preço Teto</a
+        > -->
       </div>
     </nav>
 
-    <div class="container-fluid flex-grow-1 mt-4">
-      <div class="row">
-        <div class="col-lg-4 mb-4">
-          <div class="p-4 secao rounded">
-            <h3>Como gostaria de iniciar seu patrimônio?</h3>
-            <div class="mb-3">
-              <label for="initialInvestment" class="form-label"
+    <!-- Main Content -->
+    <div class="flex-grow container mx-auto px-4 py-8">
+      <div class="flex flex-col lg:flex-row gap-6">
+        <!-- Input Form -->
+        <div class="lg:w-1/3">
+          <div class="glassmorphism rounded-xl p-6 shadow-lg">
+            <h3 class="text-xl font-semibold mb-4 text-primary-light">
+              Como gostaria de iniciar seu patrimônio?
+            </h3>
+            <div class="mb-4">
+              <label
+                for="initialInvestment"
+                class="block text-sm font-medium text-gray-300 mb-1"
                 >Investimento inicial:</label
               >
-              <input
-                type="number"
-                id="initialInvestment"
-                class="form-control"
-                placeholder="R$ 1.000,00"
-              />
+              <div class="relative">
+                <div
+                  class="absolute inset-y-0 left-0 flex items-center pl-3 pointer-events-none"
+                >
+                  <span class="text-gray-400">R$</span>
+                </div>
+                <input
+                  type="number"
+                  id="initialInvestment"
+                  class="bg-dark-light bg-opacity-50 border border-gray-600 text-white pl-10 py-2.5 rounded-lg w-full focus:ring-primary focus:border-primary focus:outline-none"
+                  placeholder="1.000,00"
+                />
+              </div>
             </div>
 
-            <div class="mb-3">
-              <label for="monthlyContribution" class="form-label"
+            <div class="mb-4">
+              <label
+                for="monthlyContribution"
+                class="block text-sm font-medium text-gray-300 mb-1"
                 >Valor dos aportes mensais:</label
               >
-              <input
-                type="number"
-                id="monthlyContribution"
-                class="form-control"
-                placeholder="R$ 0,00"
-              />
+              <div class="relative">
+                <div
+                  class="absolute inset-y-0 left-0 flex items-center pl-3 pointer-events-none"
+                >
+                  <span class="text-gray-400">R$</span>
+                </div>
+                <input
+                  type="number"
+                  id="monthlyContribution"
+                  class="bg-dark-light bg-opacity-50 border border-gray-600 text-white pl-10 py-2.5 rounded-lg w-full focus:ring-primary focus:border-primary focus:outline-none"
+                  placeholder="100,00"
+                />
+              </div>
             </div>
 
-            <div class="mb-3">
-              <label for="investmentPeriod" class="form-label"
+            <div class="mb-6">
+              <label
+                for="investmentPeriod"
+                class="block text-sm font-medium text-gray-300 mb-1"
                 >Período da aplicação:</label
               >
-              <input
-                type="number"
-                id="investmentPeriod"
-                class="form-control"
-                placeholder="1"
-              />
-              <select id="periodType" class="form-select mt-2">
-                <option value="years">anos</option>
-                <option value="months">meses</option>
-              </select>
+              <div class="flex gap-2">
+                <input
+                  type="number"
+                  id="investmentPeriod"
+                  class="bg-dark-light bg-opacity-50 border border-gray-600 text-white py-2.5 px-3 rounded-lg flex-grow focus:ring-primary focus:border-primary focus:outline-none"
+                  placeholder="1"
+                />
+                <select
+                  id="periodType"
+                  class="bg-dark-light bg-opacity-50 border border-gray-600 text-white py-2.5 px-3 rounded-lg w-1/3 focus:ring-primary focus:border-primary focus:outline-none"
+                >
+                  <option value="years">anos</option>
+                  <option value="months">meses</option>
+                </select>
+              </div>
             </div>
 
-            <button onclick="calcularRetornos()" class="btn w-100">
+            <button
+              onclick="calcularRetornos()"
+              class="w-full py-3 bg-primary hover:bg-primary-hover text-white font-medium rounded-lg transition duration-300 transform hover:scale-105 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary"
+            >
               Ver simulação
             </button>
           </div>
         </div>
 
-        <div id="melhoresOPC" class="col-lg-8">
-          <div class="p-1 secao rounded">
-            <div id="results" class="mt-3"></div>
-            <div
-              id="container"
-              class="mt-4"
-              style="height: 350px; min-width: 310px"
-            ></div>
+        <!-- Results -->
+        <div id="melhoresOPC" class="lg:w-2/3">
+          <div class="glassmorphism rounded-xl p-6 shadow-lg">
+            <div id="results" class="mb-6 overflow-x-auto"></div>
+            <div id="container" class="chart-container"></div>
           </div>
         </div>
       </div>
     </div>
 
-    <footer class="text-center py-3 mt-auto">
-      <p class="mb-0">MoneyGrow-FI - Simulador de Investimentos &copy; 2024</p>
+    <!-- Footer -->
+    <footer class="mt-auto py-4 bg-dark-light bg-opacity-30">
+      <div class="container mx-auto px-4">
+        <p class="text-center text-gray-400">
+          MoneyGrow-FI - Simulador de Investimentos &copy; 2024
+        </p>
+      </div>
     </footer>
 
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.1/jquery.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
-    <script src="script.js"></script>
     <script src="https://code.highcharts.com/highcharts.js"></script>
+    <script>
+      // Mobile menu toggle
+      document
+        .getElementById("mobileMenuButton")
+        .addEventListener("click", function () {
+          const menu = document.getElementById("mobileMenu");
+          menu.classList.toggle("hidden");
+        });
+
+      // Initialize Highcharts with a dark theme
+      Highcharts.setOptions({
+        chart: {
+          backgroundColor: "rgba(30, 41, 59, 0.8)",
+          style: {
+            fontFamily: "Inter, sans-serif",
+          },
+        },
+        colors: [
+          "#6366F1",
+          "#8B5CF6",
+          "#EC4899",
+          "#10B981",
+          "#F59E0B",
+          "#EF4444",
+          "#3B82F6",
+        ],
+        title: {
+          style: {
+            color: "#F9FAFB",
+          },
+        },
+        legend: {
+          itemStyle: {
+            color: "#F9FAFB",
+          },
+          itemHoverStyle: {
+            color: "#D1D5DB",
+          },
+        },
+        xAxis: {
+          labels: {
+            style: {
+              color: "#9CA3AF",
+            },
+          },
+          title: {
+            style: {
+              color: "#9CA3AF",
+            },
+          },
+          gridLineColor: "rgba(75, 85, 99, 0.3)",
+          lineColor: "rgba(75, 85, 99, 0.6)",
+          tickColor: "rgba(75, 85, 99, 0.6)",
+        },
+        yAxis: {
+          labels: {
+            style: {
+              color: "#9CA3AF",
+            },
+          },
+          title: {
+            style: {
+              color: "#9CA3AF",
+            },
+          },
+          gridLineColor: "rgba(75, 85, 99, 0.3)",
+        },
+        tooltip: {
+          backgroundColor: "rgba(17, 24, 39, 0.9)",
+          style: {
+            color: "#F9FAFB",
+          },
+        },
+        plotOptions: {
+          series: {
+            marker: {
+              fillColor: null,
+              lineColor: null,
+            },
+          },
+        },
+      });
+    </script>
+    <script>
+      let currentInvestmentIndex = 0;
+      let investmentsKeys = [];
+      let resultados = {};
+
+      function plotAllInvestments() {
+        const container = document.getElementById("container");
+
+        const seriesData = investmentsKeys.map((investmentKey) => ({
+          name: investmentKey,
+          data: resultados[investmentKey].evolution,
+        }));
+
+        Highcharts.chart("container", {
+          title: {
+            text: "Evolução do Patrimônio",
+          },
+          xAxis: {
+            categories: resultados[investmentsKeys[0]].evolution.map(
+              (_, i) => i + 1
+            ),
+            title: {
+              text: "Meses",
+            },
+          },
+          yAxis: {
+            title: {
+              text: "Patrimônio (R$)",
+            },
+            labels: {
+              formatter: function () {
+                return this.value.toLocaleString("pt-BR", {
+                  style: "currency",
+                  currency: "BRL",
+                  minimumFractionDigits: 2,
+                  maximumFractionDigits: 2,
+                });
+              },
+            },
+          },
+          tooltip: {
+            pointFormatter: function () {
+              return `<span style="color:${this.color}">\u25CF</span> ${
+                this.series.name
+              }: <b>${this.y.toLocaleString("pt-BR", {
+                style: "currency",
+                currency: "BRL",
+                minimumFractionDigits: 2,
+                maximumFractionDigits: 2,
+              })}</b><br/>`;
+            },
+          },
+          legend: {
+            enabled: true,
+          },
+          plotOptions: {
+            series: {
+              lineWidth: 2,
+              marker: {
+                enabled: false,
+              },
+              states: {
+                hover: {
+                  lineWidth: 3,
+                },
+              },
+            },
+          },
+          series: seriesData,
+        });
+      }
+
+      // consumo da API do BCB para buscar o último CDI
+      async function buscarUltimoCDI() {
+        const url =
+          "https://api.bcb.gov.br/dados/serie/bcdata.sgs.12/dados/ultimos/1?formato=json";
+        try {
+          const resposta = await fetch(url);
+          if (!resposta.ok) {
+            throw new Error("Falha ao obter dados do CDI");
+          }
+          const dados = await resposta.json();
+          return parseFloat(dados[0].valor);
+        } catch (erro) {
+          console.error("Erro ao buscar CDI:", erro);
+          return 10.4; // Valor padrão caso a API falhe
+        }
+      }
+
+      // calcular juros compostos com aplicação de IR
+      function jurosCompostos(
+        capitalInicial,
+        taxa,
+        tempo,
+        aporteMensal,
+        tributavel
+      ) {
+        let montante = capitalInicial;
+        let evolution = [];
+        for (let i = 0; i < tempo * 12; i++) {
+          montante = (montante + aporteMensal) * (1 + taxa / 12);
+          evolution.push(montante);
+        }
+
+        let contribuicaoTotal = capitalInicial + aporteMensal * tempo * 12;
+        let lucro = montante - contribuicaoTotal;
+
+        if (tributavel) {
+          let taxaIR = obterTaxaIR(tempo);
+          lucro *= 1 - taxaIR;
+        }
+
+        let retornoLiquido = contribuicaoTotal + lucro;
+        let retornoSemInicial = retornoLiquido - capitalInicial;
+        let retornoMensalMedio = tempo > 2 / 12 ? lucro / (tempo * 12) : 0;
+
+        return {
+          retornoLiquido,
+          retornoSemInicial,
+          retornoMensalMedio,
+          evolution,
+        };
+      }
+
+      function obterTaxaIR(anos) {
+        if (anos <= 0.5) return 0.225;
+        else if (anos <= 1) return 0.2;
+        else if (anos <= 2) return 0.175;
+        else return 0.15;
+      }
+
+      function anualizarCDI(taxaDiaria) {
+        const diasUteisAno = 252;
+        const taxaDiariaDecimal = taxaDiaria / 100;
+        const taxaAnualizada =
+          (Math.pow(1 + taxaDiariaDecimal, diasUteisAno) - 1) * 100;
+        return taxaAnualizada;
+      }
+
+      async function calcularRetornos() {
+        const investimentoInicial =
+          parseFloat(document.getElementById("initialInvestment").value) || 0;
+        const aporteMensal =
+          parseFloat(document.getElementById("monthlyContribution").value) || 0;
+        const periodoInvestimento =
+          parseInt(document.getElementById("investmentPeriod").value) || 0;
+        const tipoPeriodo = document.getElementById("periodType").value;
+        const anos =
+          tipoPeriodo === "months"
+            ? periodoInvestimento / 12
+            : periodoInvestimento;
+
+        const taxaCDIDecimal = await buscarUltimoCDI();
+        const taxaCDIAnual = anualizarCDI(taxaCDIDecimal);
+
+        if (!investimentoInicial || !periodoInvestimento) {
+          alert("Preencha os campos corretamente");
+          return;
+        }
+
+        const taxas = {
+          selic: taxaCDIAnual / 100,
+          cdi: taxaCDIAnual / 100,
+          ipca: 0.0361,
+          tr: 0.00092,
+          tesouroPrefixado: 0.105,
+          tesouroIPCA: 0.055,
+          fundoDI: 0.09817,
+          cdb: taxaCDIAnual / 100,
+          lciLca: (taxaCDIAnual / 100) * 0.85,
+          poupanca: 0.05925 / 12,
+        };
+
+        resultados = {
+          "LCI e LCA": jurosCompostos(
+            investimentoInicial,
+            taxas.lciLca,
+            anos,
+            aporteMensal,
+            false
+          ),
+          CDB: jurosCompostos(
+            investimentoInicial,
+            taxas.cdb,
+            anos,
+            aporteMensal,
+            true
+          ),
+          "Tesouro Prefixado": jurosCompostos(
+            investimentoInicial,
+            taxas.tesouroPrefixado,
+            anos,
+            aporteMensal,
+            true
+          ),
+          "Tesouro Selic": jurosCompostos(
+            investimentoInicial,
+            taxas.selic,
+            anos,
+            aporteMensal,
+            false
+          ),
+          "Fundo DI": jurosCompostos(
+            investimentoInicial,
+            taxas.fundoDI,
+            anos,
+            aporteMensal,
+            true
+          ),
+          "Tesouro IPCA+": jurosCompostos(
+            investimentoInicial,
+            taxas.tesouroIPCA,
+            anos,
+            aporteMensal,
+            true
+          ),
+          "Correção pelo IPCA": jurosCompostos(
+            investimentoInicial,
+            taxas.ipca,
+            anos,
+            aporteMensal,
+            false
+          ),
+        };
+
+        investmentsKeys = Object.keys(resultados);
+
+        plotAllInvestments();
+        exibirResultados(resultados);
+      }
+
+      function exibirResultados(resultados) {
+        const containerResultados = document.getElementById("results");
+        containerResultados.innerHTML = `
+              <div class="overflow-x-auto">
+                  <table class="min-w-full divide-y divide-gray-600">
+                      <thead>
+                          <tr>
+                              <th class="px-4 py-3 bg-gray-700 bg-opacity-50 text-left text-xs font-medium text-gray-300 uppercase tracking-wider rounded-tl-lg">Investimento</th>
+                              <th class="px-4 py-3 bg-gray-700 bg-opacity-50 text-right text-xs font-medium text-gray-300 uppercase tracking-wider">Patrimônio final</th>
+                              <th class="px-4 py-3 bg-gray-700 bg-opacity-50 text-right text-xs font-medium text-gray-300 uppercase tracking-wider">Retorno Líquido</th>
+                              <th class="px-4 py-3 bg-gray-700 bg-opacity-50 text-right text-xs font-medium text-gray-300 uppercase tracking-wider rounded-tr-lg">Retorno Mensal Médio</th>
+                          </tr>
+                      </thead>
+                      <tbody class="divide-y divide-gray-600">
+                          ${Object.entries(resultados)
+                            .map(
+                              ([chave, valor], index) => `
+                              <tr class="${
+                                index % 2 === 0
+                                  ? "bg-gray-800 bg-opacity-30"
+                                  : "bg-gray-700 bg-opacity-30"
+                              }">
+                                  <td class="px-4 py-3 whitespace-nowrap text-sm font-medium text-white">${chave}</td>
+                                  <td class="px-4 py-3 whitespace-nowrap text-sm text-gray-200 text-right">${formatarMoeda(
+                                    valor.retornoLiquido
+                                  )}</td>
+                                  <td class="px-4 py-3 whitespace-nowrap text-sm text-gray-200 text-right">${formatarMoeda(
+                                    valor.retornoSemInicial
+                                  )}</td>
+                                  <td class="px-4 py-3 whitespace-nowrap text-sm text-gray-200 text-right">${formatarMoeda(
+                                    valor.retornoMensalMedio
+                                  )}</td>
+                              </tr>
+                          `
+                            )
+                            .join("")}
+                      </tbody>
+                  </table>
+              </div>
+          `;
+      }
+
+      function formatarMoeda(valor) {
+        return valor.toLocaleString("pt-BR", {
+          style: "currency",
+          currency: "BRL",
+        });
+      }
+    </script>
   </body>
 </html>

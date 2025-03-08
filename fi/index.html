@@ -1,169 +1,620 @@
 <!DOCTYPE html>
-<html lang="pt-br">
+<html lang="pt-BR">
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Fundos Imobiliários</title>
+    <title>MoneyGrow - Fundos Imobiliários</title>
     <link
-      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css"
+      href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css"
       rel="stylesheet"
     />
-    <link rel="stylesheet" href="../styles.css" />
-    <link rel="stylesheet" href="styles-fi.css" />
     <link
       href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css"
       rel="stylesheet"
     />
-    <link rel="shortcut icon" href="../imgs/logo.png" type="image/x-icon" />
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+      tailwind.config = {
+        theme: {
+          extend: {
+            colors: {
+              primary: {
+                DEFAULT: "#6366F1",
+                hover: "#4F46E5",
+                light: "#EEF2FF",
+              },
+              dark: {
+                DEFAULT: "#1E293B",
+                light: "#334155",
+                lighter: "#475569",
+              },
+              success: {
+                DEFAULT: "#10B981",
+                hover: "#059669",
+              },
+              danger: {
+                DEFAULT: "#EF4444",
+                hover: "#DC2626",
+              },
+            },
+          },
+        },
+      };
+    </script>
+    <style>
+      .glassmorphism {
+        backdrop-filter: blur(10px);
+        background-color: rgba(255, 255, 255, 0.1);
+        border: 1px solid rgba(255, 255, 255, 0.05);
+      }
+
+      .table-wrapper::-webkit-scrollbar {
+        height: 8px;
+      }
+
+      .table-wrapper::-webkit-scrollbar-track {
+        background: rgba(255, 255, 255, 0.1);
+        border-radius: 4px;
+      }
+
+      .table-wrapper::-webkit-scrollbar-thumb {
+        background: rgba(255, 255, 255, 0.2);
+        border-radius: 4px;
+      }
+
+      .table-wrapper::-webkit-scrollbar-thumb:hover {
+        background: rgba(255, 255, 255, 0.3);
+      }
+
+      /* Tab accordion styles */
+      .tab-collapsed {
+        max-height: 3.5rem;
+        overflow: hidden;
+        transition: max-height 0.3s ease-in-out;
+      }
+
+      .tab-expanded {
+        max-height: 1000px; /* Arbitrary large value */
+        transition: max-height 0.5s ease-in-out;
+      }
+    </style>
   </head>
-  <body class="bg-dark text-light d-flex flex-column min-vh-100">
-    <nav class="navbar navbar-expand-lg">
-      <div class="container barraNavegacao">
-        <a class="navbar-brand" href="#">
-          <img class="logo" src="../imgs/logo.png" alt="Logo" /> MoneyGrow
-        </a>
-        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
-          <span class="navbar-toggler-icon"></span>
-        </button>
-        <div class="collapse navbar-collapse" id="navbarNav">
-          <ul class="navbar-nav ms-auto">
-            <li class="nav-item dropdown">
-              <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                Opções
-              </a>
-              <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
-                <li><a class="dropdown-item" href="../index.html">Renda Fixa</a></li>
-                <li><a class="dropdown-item" href="../precoteto/">Preço Teto</a></li>
-              </ul>
-            </li>
-          </ul>
+
+  <body
+    class="bg-gradient-to-br from-gray-900 to-gray-800 text-gray-100 min-h-screen flex flex-col"
+  >
+    <!-- Navigation -->
+    <nav class="bg-dark-light bg-opacity-50 shadow-lg">
+      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="flex justify-between h-16">
+          <div class="flex items-center">
+            <a href="../index.html" class="flex items-center space-x-2">
+              <img
+                class="h-10 w-auto"
+                src="../imgs/logo.png"
+                alt="MoneyGrow Logo"
+              />
+              <span class="text-xl font-bold text-white">MoneyGrow</span>
+            </a>
+          </div>
+          <div class="hidden md:flex md:items-center">
+            <div class="relative group">
+              <button
+                type="button"
+                class="inline-flex items-center px-4 py-2 text-sm font-medium text-white rounded-md hover:bg-dark-lighter focus:outline-none"
+              >
+                <span>Opções</span>
+                <svg
+                  class="ml-2 h-5 w-5"
+                  xmlns="http://www.w3.org/2000/svg"
+                  viewBox="0 0 20 20"
+                  fill="currentColor"
+                  aria-hidden="true"
+                >
+                  <path
+                    fill-rule="evenodd"
+                    d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z"
+                    clip-rule="evenodd"
+                  />
+                </svg>
+              </button>
+              <div
+                class="absolute right-0 w-48 py-2 mt-2 bg-white rounded-md shadow-xl opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-300 z-50"
+              >
+                <a
+                  href="../index.html"
+                  class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
+                  >Renda Fixa</a
+                >
+                <!-- <a
+                  href="../precoteto"
+                  class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
+                  >Preço Teto</a
+                > -->
+              </div>
+            </div>
+          </div>
+          <div class="flex items-center md:hidden">
+            <button
+              type="button"
+              id="mobileMenuButton"
+              class="inline-flex items-center justify-center p-2 rounded-md text-gray-400 hover:text-white hover:bg-gray-700 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-white"
+            >
+              <svg
+                class="h-6 w-6"
+                xmlns="http://www.w3.org/2000/svg"
+                fill="none"
+                viewBox="0 0 24 24"
+                stroke="currentColor"
+              >
+                <path
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  stroke-width="2"
+                  d="M4 6h16M4 12h16M4 18h16"
+                />
+              </svg>
+            </button>
+          </div>
         </div>
+      </div>
+      <div
+        id="mobileMenu"
+        class="hidden md:hidden px-2 pt-2 pb-3 space-y-1 sm:px-3"
+      >
+        <a
+          href="../index.html"
+          class="block px-3 py-2 rounded-md text-base font-medium text-white hover:bg-gray-700"
+          >Renda Fixa</a
+        >
+        <!-- <a
+          href="../precoteto"
+          class="block px-3 py-2 rounded-md text-base font-medium text-white hover:bg-gray-700"
+          >Preço Teto</a
+        > -->
       </div>
     </nav>
 
-    <div class="container-fluid mt-5">
-      <div class="row">
-        <!-- Formulário de entrada -->
-        <div class="col-lg-4">
-          <form id="simulador" class="border p-4 rounded secao">
-            <div class="mb-3">
-              <label for="preco-cota" class="form-label">Preço da cota</label>
-              <input
-                type="number"
-                class="form-control"
-                id="preco-cota"
-                step="0.01"
-                value="10.03"
-              />
-            </div>
+    <!-- Main Content -->
+    <div class="flex-grow container mx-auto px-4 py-8">
+      <h1
+        class="text-2xl md:text-3xl font-bold text-center mb-6 text-primary-light"
+      >
+        Simulador de Fundos Imobiliários
+      </h1>
 
-            <div class="mb-3">
-              <label for="ultimo-rendimento" class="form-label"
-                >Último rendimento</label
-              >
-              <input
-                type="number"
-                class="form-control"
-                id="ultimo-rendimento"
-                step="0.01"
-                value="0.09"
-              />
-            </div>
-
-            <div class="mb-3">
-              <label for="investimento-mensal" class="form-label"
-                >Investimento mensal</label
-              >
-              <input
-                type="number"
-                class="form-control"
-                id="investimento-mensal"
-                value="200"
-              />
-            </div>
-
-            <div class="mb-3">
-              <label for="prazo" class="form-label">Prazo (em anos)</label>
-              <input type="number" class="form-control" id="prazo" value="2" />
-            </div>
-
-            <div class="mb-3">
-              <label for="qtd-cotas-inicial" class="form-label"
-                >Quantidade de cotas inicial</label
-              >
-              <input
-                type="number"
-                class="form-control"
-                id="qtd-cotas-inicial"
-                value="600"
-              />
-            </div>
-
-            <div class="form-check mb-3">
-              <input
-                class="form-check-input"
-                type="checkbox"
-                id="reinvestir-dividendos"
-                checked
-              />
-              <label class="form-check-label" for="reinvestir-dividendos">
-                Reinvestir dividendos ganhos e o que sobrar do investimento
-                mensal
-              </label>
-            </div>
-
-            <button
-              type="button"
-              class="btn btn-primary w-100"
-              onclick="calcular()"
+      <div class="flex flex-col lg:flex-row gap-6">
+        <!-- Input Form -->
+        <div class="lg:w-1/3">
+          <div class="glassmorphism rounded-xl p-6 shadow-lg">
+            <h3
+              class="text-xl font-medium mb-4 text-primary-light border-b border-gray-700 pb-2"
             >
-              Calcular
-            </button>
-          </form>
+              Parâmetros da Simulação
+            </h3>
+
+            <form id="simulador">
+              <div class="mb-4">
+                <label
+                  for="preco-cota"
+                  class="block text-sm font-medium text-gray-300 mb-1"
+                  >Preço da cota</label
+                >
+                <div class="relative">
+                  <div
+                    class="absolute inset-y-0 left-0 flex items-center pl-3 pointer-events-none"
+                  >
+                    <span class="text-gray-400">R$</span>
+                  </div>
+                  <input
+                    type="number"
+                    id="preco-cota"
+                    class="bg-dark-light bg-opacity-50 border border-gray-600 text-white pl-10 py-2.5 rounded-lg w-full focus:ring-primary focus:border-primary focus:outline-none"
+                    step="0.01"
+                    value="10.03"
+                  />
+                </div>
+              </div>
+
+              <div class="mb-4">
+                <label
+                  for="ultimo-rendimento"
+                  class="block text-sm font-medium text-gray-300 mb-1"
+                  >Último rendimento</label
+                >
+                <div class="relative">
+                  <div
+                    class="absolute inset-y-0 left-0 flex items-center pl-3 pointer-events-none"
+                  >
+                    <span class="text-gray-400">R$</span>
+                  </div>
+                  <input
+                    type="number"
+                    id="ultimo-rendimento"
+                    class="bg-dark-light bg-opacity-50 border border-gray-600 text-white pl-10 py-2.5 rounded-lg w-full focus:ring-primary focus:border-primary focus:outline-none"
+                    step="0.01"
+                    value="0.09"
+                  />
+                </div>
+              </div>
+
+              <div class="mb-4">
+                <label
+                  for="investimento-mensal"
+                  class="block text-sm font-medium text-gray-300 mb-1"
+                  >Investimento mensal</label
+                >
+                <div class="relative">
+                  <div
+                    class="absolute inset-y-0 left-0 flex items-center pl-3 pointer-events-none"
+                  >
+                    <span class="text-gray-400">R$</span>
+                  </div>
+                  <input
+                    type="number"
+                    id="investimento-mensal"
+                    class="bg-dark-light bg-opacity-50 border border-gray-600 text-white pl-10 py-2.5 rounded-lg w-full focus:ring-primary focus:border-primary focus:outline-none"
+                    value="200"
+                  />
+                </div>
+              </div>
+
+              <div class="mb-4">
+                <label
+                  for="prazo"
+                  class="block text-sm font-medium text-gray-300 mb-1"
+                  >Prazo (em anos)</label
+                >
+                <input
+                  type="number"
+                  id="prazo"
+                  class="bg-dark-light bg-opacity-50 border border-gray-600 text-white py-2.5 px-3 rounded-lg w-full focus:ring-primary focus:border-primary focus:outline-none"
+                  value="2"
+                />
+              </div>
+
+              <div class="mb-5">
+                <label
+                  for="qtd-cotas-inicial"
+                  class="block text-sm font-medium text-gray-300 mb-1"
+                  >Quantidade de cotas inicial</label
+                >
+                <input
+                  type="number"
+                  id="qtd-cotas-inicial"
+                  class="bg-dark-light bg-opacity-50 border border-gray-600 text-white py-2.5 px-3 rounded-lg w-full focus:ring-primary focus:border-primary focus:outline-none"
+                  value="600"
+                />
+              </div>
+
+              <div class="flex items-start mb-5">
+                <div class="flex items-center h-5">
+                  <input
+                    id="reinvestir-dividendos"
+                    type="checkbox"
+                    class="w-4 h-4 bg-dark-light border-gray-600 rounded focus:ring-primary focus:ring-2"
+                    checked
+                  />
+                </div>
+                <label
+                  for="reinvestir-dividendos"
+                  class="ml-2 text-sm font-medium text-gray-300"
+                >
+                  Reinvestir dividendos ganhos e o que sobrar do investimento
+                  mensal
+                </label>
+              </div>
+
+              <button
+                type="button"
+                onclick="calcular()"
+                class="w-full py-3 bg-primary hover:bg-primary-hover text-white font-medium rounded-lg transition duration-300 transform hover:scale-105 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary"
+              >
+                Calcular
+              </button>
+            </form>
+          </div>
         </div>
 
-        <!-- Resultados -->
-        <div class="col-md-6" id="resultados-container">
-          <div id="resultados" class="border p-4 rounded secao">
-            <h2>Resultados</h2>
-            <div id="resumo" class="mb-3">
-              <p>
-                <strong>Último rendimento:</strong>
-                <span id="ultimo-rendimento-resumo">0.09</span>
-              </p>
-              <p>
-                <strong>Total Investido:</strong>
-                <span id="total-investido">0.00</span>
-              </p>
-              <p>
-                <strong>Total Reinvestido:</strong>
-                <span id="total-reinvestido">0.00</span>
-              </p>
-              <p></p>
-                <strong>Total de Proventos Recebidos:</strong>
-                <span id="total-proventos-recebidos">0.00</span>
-              </p>
-              <p>
-                <strong>Dividendos mensais no final:</strong>
-                <span id="dividendos-finais">0.00</span>
-              </p>
+        <!-- Results Section -->
+        <div class="lg:w-2/3" id="resultados-container">
+          <div
+            id="resultados"
+            class="glassmorphism rounded-xl p-6 shadow-lg mb-6"
+          >
+            <h2
+              class="text-xl font-semibold mb-4 text-primary-light border-b border-gray-700 pb-2"
+            >
+              Resumo da Simulação
+            </h2>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+              <div class="glassmorphism rounded-lg p-4">
+                <div class="text-sm text-gray-400 mb-1">Último rendimento</div>
+                <div
+                  class="text-lg font-semibold"
+                  id="ultimo-rendimento-resumo"
+                >
+                  R$ 0,09
+                </div>
+              </div>
+
+              <div class="glassmorphism rounded-lg p-4">
+                <div class="text-sm text-gray-400 mb-1">Total Investido</div>
+                <div class="text-lg font-semibold" id="total-investido">
+                  R$ 0,00
+                </div>
+              </div>
+
+              <div class="glassmorphism rounded-lg p-4">
+                <div class="text-sm text-gray-400 mb-1">Total Reinvestido</div>
+                <div class="text-lg font-semibold" id="total-reinvestido">
+                  R$ 0,00
+                </div>
+              </div>
+
+              <div class="glassmorphism rounded-lg p-4">
+                <div class="text-sm text-gray-400 mb-1">
+                  Total de Proventos Recebidos
+                </div>
+                <div
+                  class="text-lg font-semibold"
+                  id="total-proventos-recebidos"
+                >
+                  R$ 0,00
+                </div>
+              </div>
+
+              <div class="glassmorphism rounded-lg p-4 md:col-span-2">
+                <div class="text-sm text-gray-400 mb-1">
+                  Dividendos mensais no final
+                </div>
+                <div
+                  class="text-2xl font-bold text-primary-light"
+                  id="dividendos-finais"
+                >
+                  R$ 0,00
+                </div>
+              </div>
             </div>
           </div>
         </div>
       </div>
-      <div class="row mt-5  mg-5">
-        <!-- toggle -->
-        <div
-          class="accordion custom-accordion-bg"
-          id="accordionResultados"
-        ></div>
+
+      <!-- Year by Year Results (Accordion) -->
+      <div class="mt-6 mb-8">
+        <div id="accordionResultados" class="space-y-2">
+          <!-- Content will be dynamically inserted here -->
+        </div>
       </div>
     </div>
 
-    <footer class="text-center py-3 mt-auto">
-      <p class="mb-0">MoneyGrow-FI - Simulador de Investimentos &copy; 2024</p>
+    <!-- Footer -->
+    <footer class="mt-auto py-4 bg-dark-light bg-opacity-30">
+      <div class="container mx-auto px-4">
+        <p class="text-center text-gray-400">
+          MoneyGrow-FI - Simulador de Investimentos &copy; 2024
+        </p>
+      </div>
     </footer>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
-    <script src="script-fi.js"></script>
+
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script>
+      // Mobile menu toggle
+      document
+        .getElementById("mobileMenuButton")
+        .addEventListener("click", function () {
+          const menu = document.getElementById("mobileMenu");
+          menu.classList.toggle("hidden");
+        });
+
+      // Initialize the page
+      document.addEventListener("DOMContentLoaded", function () {
+        // Initially hide the results container
+        document.getElementById("resultados-container").classList.add("hidden");
+      });
+
+      function calcular() {
+        // Capturar os valores do formulário
+        const precoCota = parseFloat(
+          document.getElementById("preco-cota").value
+        );
+        const ultimoRendimento = parseFloat(
+          document.getElementById("ultimo-rendimento").value
+        );
+        const investimentoMensal = parseFloat(
+          document.getElementById("investimento-mensal").value
+        );
+        const prazo = parseInt(document.getElementById("prazo").value);
+        const qtdCotasInicial = parseInt(
+          document.getElementById("qtd-cotas-inicial").value
+        );
+        const reinvestir = document.getElementById(
+          "reinvestir-dividendos"
+        ).checked;
+
+        let totalInvestido = 0;
+        let totalReinvestido = 0;
+        let totalProventosRecebidos = 0;
+        let cotas = qtdCotasInicial;
+        let dividendosAnteriores = 0;
+        const accordionResultados = document.getElementById(
+          "accordionResultados"
+        );
+        accordionResultados.innerHTML = "";
+
+        // Show results container
+        const resultadosContainer = document.getElementById(
+          "resultados-container"
+        );
+        resultadosContainer.classList.remove("hidden");
+
+        // Create arrays for chart data
+        let chartLabels = [];
+        let cotasData = [];
+        let patrimonioData = [];
+        let dividendosData = [];
+
+        // Para cada ano
+        for (let ano = 1; ano <= prazo; ano++) {
+          let tabela = "";
+          let totalAnoInvestido = 0,
+            totalAnoReinvestido = 0,
+            dividendosAno = 0;
+
+          // Para cada mês
+          for (let mes = 1; mes <= 12; mes++) {
+            let reinvestimento;
+
+            // Cálculo dos dividendos do mês atual
+            const dividendos = cotas * ultimoRendimento;
+
+            // Acumular dividendos no total de proventos recebidos
+            totalProventosRecebidos += dividendos;
+
+            // Se for o primeiro mês, o reinvestimento será feito com os proventos do próprio mês
+            if (mes === 1 && ano === 1) {
+              reinvestimento = reinvestir ? dividendos : 0;
+            } else {
+              // Nos demais meses, o reinvestimento será feito com base nos dividendos do mês anterior
+              reinvestimento = reinvestir ? dividendosAnteriores : 0;
+            }
+
+            const cotasReinvestidas = Math.floor(reinvestimento / precoCota);
+
+            // Aporte mensal
+            const cotasAporte = Math.floor(investimentoMensal / precoCota);
+
+            // Atualizar a quantidade de cotas
+            cotas += cotasReinvestidas + cotasAporte;
+
+            // Atualizar os totais
+            totalReinvestido += reinvestimento;
+            totalInvestido += investimentoMensal;
+
+            totalAnoInvestido += investimentoMensal;
+            totalAnoReinvestido += reinvestimento;
+            dividendosAno += dividendos;
+
+            // Cálculo do patrimônio (cotas * valor da cota)
+            const patrimonio = cotas * precoCota;
+
+            // Save data for chart every 3 months
+            if (mes % 3 === 0) {
+              chartLabels.push(`Ano ${ano} - Mês ${mes}`);
+              cotasData.push(cotas);
+              patrimonioData.push(patrimonio);
+              dividendosData.push(dividendos);
+            }
+
+            // Linha da tabela para o mês
+            tabela += `
+                      <tr class="${
+                        mes % 2 === 0 ? "bg-dark-light bg-opacity-30" : ""
+                      }">
+                          <td class="py-2 px-3">${mes}°</td>
+                          <td class="py-2 px-3 text-right">${Math.floor(
+                            cotas
+                          ).toLocaleString("pt-BR")}</td>
+                          <td class="py-2 px-3 text-right">${formatarMoeda(
+                            investimentoMensal
+                          )}</td>
+                          <td class="py-2 px-3 text-right">${formatarMoeda(
+                            patrimonio
+                          )}</td>
+                          <td class="py-2 px-3 text-right">${formatarMoeda(
+                            reinvestimento
+                          )}</td>
+                          <td class="py-2 px-3 text-right">${formatarMoeda(
+                            dividendos
+                          )}</td>
+                      </tr>
+                  `;
+
+            // O dividendo do mês atual será usado para reinvestimento no próximo mês
+            dividendosAnteriores = dividendos;
+          }
+
+          // Adicionar ano ao acordeão
+          accordionResultados.innerHTML += `
+                  <div class="tab-collapsed glassmorphism rounded-lg overflow-hidden" id="year-tab-${ano}">
+                      <div class="year-tab-header cursor-pointer p-4 flex justify-between items-center bg-primary bg-opacity-60">
+                          <h3 class="text-lg font-medium">Ano ${ano}</h3>
+                          <div class="flex items-center">
+                              <div class="text-sm mr-4">
+                                  <span class="block">Dividendos: ${formatarMoeda(
+                                    dividendosAno
+                                  )}</span>
+                                  <span class="block">Patrimônio: ${formatarMoeda(
+                                    cotas * precoCota
+                                  )}</span>
+                              </div>
+                              <svg class="transform transition-transform duration-300 h-5 w-5 tab-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor">
+                                  <path fill-rule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clip-rule="evenodd" />
+                              </svg>
+                          </div>
+                      </div>
+                      <div class="year-tab-content p-0">
+                          <div class="table-wrapper overflow-x-auto">
+                              <table class="min-w-full">
+                                  <thead>
+                                      <tr class="bg-dark-light bg-opacity-50 text-xs uppercase">
+                                          <th class="py-2 px-3 text-left font-medium">Mês</th>
+                                          <th class="py-2 px-3 text-right font-medium">Cotas</th>
+                                          <th class="py-2 px-3 text-right font-medium">Valor Investido</th>
+                                          <th class="py-2 px-3 text-right font-medium">Patrimônio</th>
+                                          <th class="py-2 px-3 text-right font-medium">Reinvestimento</th>
+                                          <th class="py-2 px-3 text-right font-medium">Dividendo</th>
+                                      </tr>
+                                  </thead>
+                                  <tbody>
+                                      ${tabela}
+                                  </tbody>
+                              </table>
+                          </div>
+                      </div>
+                  </div>
+              `;
+        }
+
+        // Add event listeners to tabs
+        document.querySelectorAll(".year-tab-header").forEach((header) => {
+          header.addEventListener("click", function () {
+            const tab = this.closest(".tab-collapsed, .tab-expanded");
+            const icon = this.querySelector(".tab-icon");
+
+            if (tab.classList.contains("tab-collapsed")) {
+              tab.classList.remove("tab-collapsed");
+              tab.classList.add("tab-expanded");
+              icon.classList.add("rotate-180");
+            } else {
+              tab.classList.remove("tab-expanded");
+              tab.classList.add("tab-collapsed");
+              icon.classList.remove("rotate-180");
+            }
+          });
+        });
+
+        // Atualizar os resultados finais
+        document.getElementById("ultimo-rendimento-resumo").innerText =
+          formatarMoeda(ultimoRendimento);
+        document.getElementById("total-investido").innerText =
+          formatarMoeda(totalInvestido);
+        document.getElementById("total-reinvestido").innerText =
+          formatarMoeda(totalReinvestido);
+        document.getElementById("dividendos-finais").innerText = formatarMoeda(
+          cotas * ultimoRendimento
+        );
+        document.getElementById("total-proventos-recebidos").innerText =
+          formatarMoeda(totalProventosRecebidos);
+      }
+
+      function formatarMoeda(valor) {
+        return valor.toLocaleString("pt-BR", {
+          style: "currency",
+          currency: "BRL",
+        });
+      }
+    </script>
   </body>
 </html>

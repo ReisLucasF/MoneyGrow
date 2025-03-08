@@ -3,74 +3,463 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Preço Teto</title>
+    <title>MoneyGrow - Preço Teto</title>
     <link
-      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css"
+      href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css"
       rel="stylesheet"
     />
-    <link rel="stylesheet" href="../styles.css" />
-    <link rel="stylesheet" href="style.css" />
+    <link
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css"
+      rel="stylesheet"
+    />
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+      tailwind.config = {
+        theme: {
+          extend: {
+            colors: {
+              primary: {
+                DEFAULT: "#6366F1",
+                hover: "#4F46E5",
+                light: "#EEF2FF",
+              },
+              dark: {
+                DEFAULT: "#1E293B",
+                light: "#334155",
+                lighter: "#475569",
+              },
+              success: {
+                DEFAULT: "#10B981",
+                hover: "#059669",
+              },
+              danger: {
+                DEFAULT: "#EF4444",
+                hover: "#DC2626",
+              },
+            },
+          },
+        },
+      };
+    </script>
+    <style>
+      .glassmorphism {
+        backdrop-filter: blur(10px);
+        background-color: rgba(255, 255, 255, 0.1);
+        border: 1px solid rgba(255, 255, 255, 0.05);
+      }
+
+      /* Animated placeholder */
+      @keyframes placeholderShimmer {
+        0% {
+          background-position: -468px 0;
+        }
+        100% {
+          background-position: 468px 0;
+        }
+      }
+
+      .animated-placeholder {
+        animation-duration: 1.5s;
+        animation-fill-mode: forwards;
+        animation-iteration-count: infinite;
+        animation-name: placeholderShimmer;
+        animation-timing-function: linear;
+        background: linear-gradient(
+          to right,
+          #334155 8%,
+          #475569 18%,
+          #334155 33%
+        );
+        background-size: 800px 104px;
+        position: relative;
+      }
+    </style>
   </head>
-  <body class="bg-dark text-light">
-    <nav class="navbar navbar-expand-lg">
-      <div class="container barraNavegacao">
-        <a class="navbar-brand" href="#">
-          <img class="logo" src="../imgs/logo.png" alt="Logo" /> MoneyGrow
-        </a>
-        <button
-          class="navbar-toggler"
-          type="button"
-          data-bs-toggle="collapse"
-          data-bs-target="#navbarNav"
-          aria-controls="navbarNav"
-          aria-expanded="false"
-          aria-label="Toggle navigation"
-        >
-          <span class="navbar-toggler-icon"></span>
-        </button>
-        <div class="collapse navbar-collapse" id="navbarNav">
-          <ul class="navbar-nav ms-auto">
-            <li class="nav-item dropdown">
-              <a
-                class="nav-link dropdown-toggle"
-                href="#"
-                id="navbarDropdown"
-                role="button"
-                data-bs-toggle="dropdown"
-                aria-expanded="false"
+
+  <body
+    class="bg-gradient-to-br from-gray-900 to-gray-800 text-gray-100 min-h-screen flex flex-col"
+  >
+    <!-- Navigation -->
+    <nav class="bg-dark-light bg-opacity-50 shadow-lg">
+      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="flex justify-between h-16">
+          <div class="flex items-center">
+            <a href="../index.html" class="flex items-center space-x-2">
+              <img
+                class="h-10 w-auto"
+                src="../imgs/logo.png"
+                alt="MoneyGrow Logo"
+              />
+              <span class="text-xl font-bold text-white">MoneyGrow</span>
+            </a>
+          </div>
+          <div class="hidden md:flex md:items-center">
+            <div class="relative group">
+              <button
+                type="button"
+                class="inline-flex items-center px-4 py-2 text-sm font-medium text-white rounded-md hover:bg-dark-lighter focus:outline-none"
               >
-                Opções
-              </a>
-              <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
-                <li>
-                  <a class="dropdown-item" href="../index.html">Renda Fixa</a>
-                </li>
-                <li>
-                  <a class="dropdown-item" href="../fi">Fundos Imobiliários</a>
-                </li>
-              </ul>
-            </li>
-          </ul>
+                <span>Opções</span>
+                <svg
+                  class="ml-2 h-5 w-5"
+                  xmlns="http://www.w3.org/2000/svg"
+                  viewBox="0 0 20 20"
+                  fill="currentColor"
+                  aria-hidden="true"
+                >
+                  <path
+                    fill-rule="evenodd"
+                    d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z"
+                    clip-rule="evenodd"
+                  />
+                </svg>
+              </button>
+              <div
+                class="absolute right-0 w-48 py-2 mt-2 bg-white rounded-md shadow-xl opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-300 z-50"
+              >
+                <a
+                  href="../index.html"
+                  class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
+                  >Renda Fixa</a
+                >
+                <a
+                  href="../fi"
+                  class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
+                  >Fundos Imobiliários</a
+                >
+              </div>
+            </div>
+          </div>
+          <div class="flex items-center md:hidden">
+            <button
+              type="button"
+              id="mobileMenuButton"
+              class="inline-flex items-center justify-center p-2 rounded-md text-gray-400 hover:text-white hover:bg-gray-700 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-white"
+            >
+              <svg
+                class="h-6 w-6"
+                xmlns="http://www.w3.org/2000/svg"
+                fill="none"
+                viewBox="0 0 24 24"
+                stroke="currentColor"
+              >
+                <path
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  stroke-width="2"
+                  d="M4 6h16M4 12h16M4 18h16"
+                />
+              </svg>
+            </button>
+          </div>
         </div>
+      </div>
+      <div
+        id="mobileMenu"
+        class="hidden md:hidden px-2 pt-2 pb-3 space-y-1 sm:px-3"
+      >
+        <a
+          href="../index.html"
+          class="block px-3 py-2 rounded-md text-base font-medium text-white hover:bg-gray-700"
+          >Renda Fixa</a
+        >
+        <a
+          href="../fi"
+          class="block px-3 py-2 rounded-md text-base font-medium text-white hover:bg-gray-700"
+          >Fundos Imobiliários</a
+        >
       </div>
     </nav>
 
-    <div class="container secao2 mt-5">
-      <h1 class="text-center">Consulta de Ativos</h1>
-      <div class="d-flex justify-content-center mt-4">
-        <input
-          id="ticker-input"
-          type="text"
-          class="form-control w-50"
-          placeholder="Digite o Ticker do ativo"
-        />
-        <button id="buscar-btn" class="btn btn-success ms-3">Buscar</button>
-      </div>
+    <!-- Main Content -->
+    <div class="flex-grow container mx-auto px-4 py-8">
+      <div class="glassmorphism rounded-xl p-6 shadow-lg max-w-3xl mx-auto">
+        <h1
+          class="text-2xl md:text-3xl font-bold text-center mb-6 text-primary-light"
+        >
+          Consulta de Preço Teto de Ativos
+        </h1>
 
-      <div id="resultado" class="mt-5 text-center"></div>
+        <div class="flex flex-col md:flex-row items-center gap-3 mb-8">
+          <div class="relative w-full">
+            <div
+              class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none"
+            >
+              <svg
+                class="h-5 w-5 text-gray-400"
+                xmlns="http://www.w3.org/2000/svg"
+                viewBox="0 0 20 20"
+                fill="currentColor"
+                aria-hidden="true"
+              >
+                <path
+                  fill-rule="evenodd"
+                  d="M8 4a4 4 0 100 8 4 4 0 000-8zM2 8a6 6 0 1110.89 3.476l4.817 4.817a1 1 0 01-1.414 1.414l-4.816-4.816A6 6 0 012 8z"
+                  clip-rule="evenodd"
+                />
+              </svg>
+            </div>
+            <input
+              id="ticker-input"
+              type="text"
+              class="bg-dark-light bg-opacity-50 border border-gray-600 text-white pl-10 py-3 rounded-lg w-full focus:ring-primary focus:border-primary focus:outline-none"
+              placeholder="Digite o Ticker do ativo (ex: PETR4, VALE3)"
+            />
+          </div>
+          <button
+            id="buscar-btn"
+            class="w-full md:w-auto px-6 py-3 bg-primary hover:bg-primary-hover text-white font-medium rounded-lg transition duration-300 transform hover:scale-105 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary flex items-center justify-center"
+          >
+            <svg
+              class="h-5 w-5 mr-2"
+              xmlns="http://www.w3.org/2000/svg"
+              viewBox="0 0 20 20"
+              fill="currentColor"
+            >
+              <path
+                fill-rule="evenodd"
+                d="M8 4a4 4 0 100 8 4 4 0 000-8zM2 8a6 6 0 1110.89 3.476l4.817 4.817a1 1 0 01-1.414 1.414l-4.816-4.816A6 6 0 012 8z"
+                clip-rule="evenodd"
+              />
+            </svg>
+            Buscar
+          </button>
+        </div>
+
+        <!-- Loading indicator (hidden by default) -->
+        <div id="loading" class="hidden">
+          <div class="flex justify-center items-center space-x-2 mb-6">
+            <div class="w-4 h-4 rounded-full animate-pulse bg-primary"></div>
+            <div
+              class="w-4 h-4 rounded-full animate-pulse bg-primary"
+              style="animation-delay: 0.2s"
+            ></div>
+            <div
+              class="w-4 h-4 rounded-full animate-pulse bg-primary"
+              style="animation-delay: 0.4s"
+            ></div>
+          </div>
+          <div class="flex flex-col md:flex-row justify-center gap-6 mt-4">
+            <div
+              class="animated-placeholder h-32 w-full md:w-1/2 rounded-lg"
+            ></div>
+            <div
+              class="animated-placeholder h-32 w-full md:w-1/2 rounded-lg"
+            ></div>
+          </div>
+        </div>
+
+        <!-- Results section -->
+        <div id="resultado" class="hidden">
+          <!-- Content will be dynamically inserted here -->
+        </div>
+      </div>
     </div>
 
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
-    <script src="script.js"></script>
+    <!-- Footer -->
+    <footer class="mt-auto py-4 bg-dark-light bg-opacity-30">
+      <div class="container mx-auto px-4">
+        <p class="text-center text-gray-400">
+          MoneyGrow-FI - Simulador de Investimentos &copy; 2024
+        </p>
+      </div>
+    </footer>
+
+    <script>
+      // Mobile menu toggle
+      document
+        .getElementById("mobileMenuButton")
+        .addEventListener("click", function () {
+          const menu = document.getElementById("mobileMenu");
+          menu.classList.toggle("hidden");
+        });
+
+      document
+        .getElementById("buscar-btn")
+        .addEventListener("click", function () {
+          const ticker = document.getElementById("ticker-input").value;
+          if (ticker) {
+            buscarDadosAtivo(ticker);
+          } else {
+            // Show error toast
+            showToast("Por favor, insira um ticker válido.", "error");
+          }
+        });
+
+      // Allow searching by pressing Enter
+      document
+        .getElementById("ticker-input")
+        .addEventListener("keypress", function (e) {
+          if (e.key === "Enter") {
+            document.getElementById("buscar-btn").click();
+          }
+        });
+
+      function showToast(message, type = "info") {
+        // Create toast element
+        const toast = document.createElement("div");
+        toast.className = `fixed bottom-4 right-4 px-6 py-3 rounded-lg shadow-lg transition-opacity duration-500 z-50 ${
+          type === "error" ? "bg-red-600" : "bg-primary"
+        }`;
+        toast.innerHTML = `
+          <div class="flex items-center">
+            <span class="text-white">${message}</span>
+          </div>
+        `;
+
+        // Append to body
+        document.body.appendChild(toast);
+
+        // Remove after 3 seconds
+        setTimeout(() => {
+          toast.classList.add("opacity-0");
+          setTimeout(() => {
+            document.body.removeChild(toast);
+          }, 500);
+        }, 3000);
+      }
+
+      async function buscarDadosAtivo(ticker) {
+        // Show loading
+        document.getElementById("loading").classList.remove("hidden");
+        document.getElementById("resultado").classList.add("hidden");
+
+        try {
+          const response = await fetch(
+            `https://pecoteto.vercel.app/preco_teto/${ticker}`
+          );
+
+          // Hide loading
+          document.getElementById("loading").classList.add("hidden");
+
+          if (!response.ok) {
+            throw new Error(
+              "Erro ao buscar os dados. Verifique o ticker ou tente novamente mais tarde."
+            );
+          }
+
+          const dados = await response.json();
+          exibirResultado(ticker.toUpperCase(), dados);
+        } catch (error) {
+          // Hide loading
+          document.getElementById("loading").classList.add("hidden");
+
+          // Show error message
+          showToast(error.message, "error");
+
+          // Clear previous results
+          document.getElementById("resultado").innerHTML = `
+            <div class="text-center py-6">
+              <svg class="mx-auto h-12 w-12 text-red-500" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+              </svg>
+              <h3 class="mt-2 text-lg font-medium">${error.message}</h3>
+              <p class="mt-1 text-sm text-gray-400">Verifique o código do ativo e tente novamente.</p>
+            </div>
+          `;
+          document.getElementById("resultado").classList.remove("hidden");
+        }
+      }
+
+      function exibirResultado(ticker, dados) {
+        let dividendos = "";
+        for (let ano in dados.dividendos_ultimos_5_anos) {
+          dividendos += `<div class="flex justify-between py-1 border-b border-gray-700">
+            <span class="font-medium">${ano}</span>
+            <span>R$ ${dados.dividendos_ultimos_5_anos[ano].toFixed(2)}</span>
+          </div>`;
+        }
+
+        // Verifica se a cotação atual é maior que o preço teto
+        const isCotacaoMaior = dados.cotacao_atual > dados.preco_teto;
+        const classeCotacao = isCotacaoMaior ? "text-danger" : "text-success";
+        const icone = isCotacaoMaior
+          ? `<svg class="h-6 w-6 text-danger inline-block" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 17h8m0 0V9m0 8l-8-8-4 4-6-6" />
+          </svg>`
+          : `<svg class="h-6 w-6 text-success inline-block" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7h8m0 0v8m0-8l-8 8-4-4-6 6" />
+          </svg>`;
+
+        const statusMensagem = isCotacaoMaior
+          ? `<div class="bg-red-900 bg-opacity-25 text-danger-hover p-4 rounded-lg flex items-center space-x-3 my-4">
+            <svg class="h-6 w-6 flex-shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z" />
+            </svg>
+            <span>Ativo está negociando <strong>acima</strong> do preço teto sugerido.</span>
+          </div>`
+          : `<div class="bg-green-900 bg-opacity-25 text-success p-4 rounded-lg flex items-center space-x-3 my-4">
+            <svg class="h-6 w-6 flex-shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
+            </svg>
+            <span>Ativo está negociando <strong>abaixo</strong> do preço teto sugerido.</span>
+          </div>`;
+
+        const percentDiff = (
+          ((dados.preco_teto - dados.cotacao_atual) / dados.cotacao_atual) *
+          100
+        ).toFixed(2);
+        const upDownText =
+          percentDiff > 0 ? "potencial de alta" : "acima do valor justo";
+
+        const html = `
+          <div class="text-center mb-6">
+            <h2 class="text-2xl font-bold">${ticker}</h2>
+            <p class="text-gray-400 text-sm">Análise de Preço Teto</p>
+          </div>
+          
+          ${statusMensagem}
+          
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mt-6">
+            <div class="glassmorphism rounded-xl p-5 text-center">
+              <p class="text-gray-400 text-sm mb-2">Cotação Atual</p>
+              <p class="text-3xl font-bold ${classeCotacao}">R$ ${dados.cotacao_atual.toFixed(
+          2
+        )} ${icone}</p>
+            </div>
+            
+            <div class="glassmorphism rounded-xl p-5 text-center">
+              <p class="text-gray-400 text-sm mb-2">Preço Teto</p>
+              <p class="text-3xl font-bold">R$ ${dados.preco_teto.toFixed(
+                2
+              )}</p>
+            </div>
+          </div>
+          
+          <div class="mt-6 glassmorphism rounded-xl p-5">
+            <div class="flex justify-between items-center mb-4">
+              <p class="font-medium">Diferença</p>
+              <p class="${percentDiff > 0 ? "text-success" : "text-danger"}">
+                ${Math.abs(percentDiff)}% ${upDownText}
+              </p>
+            </div>
+            
+            <div class="w-full bg-gray-700 rounded-full h-2.5">
+              <div class="${
+                percentDiff > 0 ? "bg-success" : "bg-danger"
+              } h-2.5 rounded-full" 
+                   style="width: ${Math.min(
+                     Math.abs(percentDiff),
+                     100
+                   )}%"></div>
+            </div>
+          </div>
+          
+          ${
+            dividendos
+              ? `
+          <div class="mt-6 glassmorphism rounded-xl p-5">
+            <h3 class="font-medium text-lg mb-3">Dividendos dos últimos 5 anos</h3>
+            ${dividendos}
+          </div>
+          `
+              : ""
+          }
+        `;
+
+        document.getElementById("resultado").innerHTML = html;
+        document.getElementById("resultado").classList.remove("hidden");
+      }
+    </script>
   </body>
 </html>
